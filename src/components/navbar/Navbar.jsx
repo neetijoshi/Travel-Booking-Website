@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {AiOutlineHome, AiOutlineUser} from "react-icons/ai"
 import {signOut} from "next-auth" 
 function Navbar() {
-const [showModal,setShowModal]=useState(true)
+const [showModal,setShowModal]=useState(false)
 const[isScrolled,setIsScrolled]= useState(false)
 
 const toggModal=()=>setShowModal(prev=>!prev)
