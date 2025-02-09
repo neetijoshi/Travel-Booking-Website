@@ -7,7 +7,7 @@ const Card = ({
     place
 }) => {
   return (
-    <Link href={"/deatils/1"} className="h-[500px] w-[300px] flex flex-wrap rounded-xl cursor-pointer transition-all shadow-md hover:shadow-lg">
+    <Link href={"/details/1"} className="h-[500px] w-[300px] flex flex-wrap rounded-xl cursor-pointer transition-all shadow-md hover:shadow-lg">
       <div className="relative h-2/3 w-full">
       <Image
       src={place.image}

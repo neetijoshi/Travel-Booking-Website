@@ -12,7 +12,7 @@ const BestHotels = () => {
     {
       name:"Arabian Paradise",
       image: image_1,
-      price: 450.56,
+      price: 5550.56,
       category: "Luxury",
       reviews: 4.7,
       location: "Dubai,UAE"
