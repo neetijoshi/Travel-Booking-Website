@@ -40,7 +40,7 @@ const BookModal = ({ handleHideModal }) => {
       <div className="bg-white w-[90%] md:w-[50%] lg:w-[35%] max-h-[98vh] rounded-lg shadow-xl p-5 flex flex-col gap-5">
         
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-300 pb-3">
+        <div className="flex items-center justify-between border-b z-[100] border-gray-300 pb-3">
           <h3 className="font-semibold text-lg">Book your hotel</h3>
           <AiOutlineClose size={22} className="cursor-pointer" onClick={handleHideModal} />
         </div>
