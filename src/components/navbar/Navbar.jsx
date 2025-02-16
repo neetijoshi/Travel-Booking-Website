@@ -42,6 +42,12 @@ useEffect(()=>{
                   <Link href="/reservations">
                     Reservations
                   </Link>
+                  <Link href="/signup">
+                    Signup
+                  </Link>
+                  <Link href="/login">
+                    Login
+                  </Link>
                   <button onClick={() => signOut()} className="text-slate-500 text-center">
                     Logout
                   </button>
