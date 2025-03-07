@@ -1,26 +1,29 @@
 import db from '@/lib/db'
-import { NextResponse } from "next/server";
-import bcryptjs from 'bcryptjs';
-import { register } from 'swiper/element';
+import { NextResponse } from 'next/server'
+import bcryptjs from 'bcryptjs'
 
 export async function POST(req) {
     try {
-        const body =await req.json()
+        const body = await req.json()
 
-        const{
+        const {
             email,
             username,
             password
-        }= body
+        } = body
+
         const isExisting = await db.user.findUnique({
             where: {
                 email
             }
         })
-        if(isExisting){
-            return NextResponse.json({ message: "You are already registered"} , {status: 409} )
+
+        if (isExisting) {
+            return NextResponse.error({ message: "You've already registered" }, { status: 409 })
         }
+
         const hashedPassword = await bcryptjs.hash(password, 10)
+
         await db.user.create({
             data: {
                 email,
@@ -28,7 +31,8 @@ export async function POST(req) {
                 password: hashedPassword
             }
         })
-        return NextResponse.json({ message: "User registered successfully"} , {status: 201} )
+
+        return NextResponse.json({ message: "User has registered successfully" }, { status: 201 })
     } catch (error) {
         return NextResponse.error(error)
     }

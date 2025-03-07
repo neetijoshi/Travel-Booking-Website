@@ -103,7 +103,7 @@ const HotelDetails = ({params}) => {
           <button
             onClick={handleShowModal}
             className="cursor-pointer rounded-lg py-2 px-6 text-xl text-white bg-blue-500"
-          >
+          > 
             Book
           </button>
         </div>

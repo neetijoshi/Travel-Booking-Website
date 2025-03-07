@@ -4,6 +4,7 @@ import 'react-date-range/dist/theme/default.css';
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { DateRangePicker } from "react-date-range";
+import { redirectToCheckout } from './service';
 
 const formatPrice = (amount, currency) => {
   return new Intl.NumberFormat("en-IN", {
@@ -13,6 +14,7 @@ const formatPrice = (amount, currency) => {
 };
 
 const BookModal = ({ handleHideModal }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [dateRange, setDateRange] = useState([
     new Date(),
     new Date(new Date().setDate(new Date().getDate() + 1))
@@ -35,6 +37,17 @@ const BookModal = ({ handleHideModal }) => {
     return 1;
   };
 
+  const handlePayment = async () => {
+      setIsLoading(true)
+      const startDate = dateRange[0]
+      const endDate = dateRange[1]
+
+      const daysDifference = calcDaysDiff()
+
+      await redirectToCheckout(listing, startDate, endDate, daysDifference)
+
+      setIsLoading(false)
+  }
   return (
     <div className="fixed inset-0 flex items-center justify-center z-30 backdrop-blur-md bg-black/40">
       <div className="bg-white w-[90%] md:w-[50%] lg:w-[35%] max-h-[98vh] rounded-lg shadow-xl p-5 flex flex-col gap-5">
@@ -68,12 +81,15 @@ const BookModal = ({ handleHideModal }) => {
               Total: {formatPrice(5500 * calcNights(), "INR")}
             </div>
           </div>
-
-          <button className="rounded-lg py-3 px-6 text-lg text-white bg-blue-500 transition-all hover:bg-blue-600">
-            Submit
-          </button>
+          <div className="w-full flex items-center mt-6">
+            <button
+              onClick={handlePayment}
+              disabled={isLoading}
+              className="w-3/4 mx-auto cursor-pointer rounded-lg py-3 px-6 text-xl text-white bg-blue-500 transition-all hover:bg-blue-600"
+              label="Submit"
+            />
+          </div>
         </div>
-
       </div>
     </div>
   );
