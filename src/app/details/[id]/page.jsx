@@ -10,6 +10,10 @@ import { FaBed, FaWifi } from "react-icons/fa";
 import Review from "./Review";
 import { useParams } from "next/navigation"; 
 import BookModal from "@/components/book-modal/BookModal";
+import { getListingById } from "./service";
+import { ClipLoader } from "react-spinners";
+import { useQuery } from "@tanstack/react-query";
+
 
 register();
 
@@ -33,9 +37,31 @@ const HotelDetails = ({params}) => {
   const [showModal, setShowModal] = useState(false);
   const swiperElRef = useRef(null);
 
+  const { data: listing, isPending } = useQuery({
+    queryKey: ["listings", { id }],
+    queryFn: () => getListingById(id)
+  })
+
   const handleShowModal = () => setShowModal(true);
   const handleHideModal = () => setShowModal(false);
 
+  if (isPending) {
+    const style = {
+      marginTop: "5rem",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      height: "100vh"
+    }
+    return (
+      <div style={style}>
+        <ClipLoader
+          color={"#123abc"}
+        />
+      </div>
+    )
+  }
   // Formatting price properly
   const formatPrice = (amount, currency) => {
     return new Intl.NumberFormat("en-IN", {
@@ -46,7 +72,9 @@ const HotelDetails = ({params}) => {
 
   return (
     <div className={`min-h-screen w-full mt-24 ${showModal && "overflow-hidden"}`}>
-      {showModal && <BookModal 
+      {showModal && 
+      <BookModal 
+        listing={listing}
         handleHideModal={handleHideModal}
       />}
       <div className="h-full w-3/4 mx-auto">
